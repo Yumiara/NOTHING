@@ -1611,59 +1611,71 @@ function Library.new(config)
 			end;
 
 			function SectionTable:NewTitle(lrm)
-				local FunctionTitle = Instance.new("Frame")
-				local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
-				local TextInt = Instance.new("TextLabel")
-				local UIGradient = Instance.new("UIGradient")
-				local UICorner = Instance.new("UICorner")
+    local FunctionTitle = Instance.new("Frame")
+    local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
+    local TextInt = Instance.new("TextLabel")
+    local UIGradient = Instance.new("UIGradient")
+    local UICorner = Instance.new("UICorner")
 
+    FunctionTitle.Name = "FunctionTitle"
+    FunctionTitle.Parent = Section
+    FunctionTitle.BackgroundColor3 = Color3.fromRGB(17, 17, 17)
+    FunctionTitle.BackgroundTransparency = 0.800
+    FunctionTitle.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    FunctionTitle.BorderSizePixel = 0
+    FunctionTitle.Size = UDim2.new(0.949999988, 0, 0, 0)  -- Initial size, but height will adjust
+    FunctionTitle.AutomaticSize = Enum.AutomaticSize.Y  -- Enable automatic resizing based on content
+    FunctionTitle.ZIndex = 17
 
-				FunctionTitle.Name = "FunctionTitle"
-				FunctionTitle.Parent = Section
-				FunctionTitle.BackgroundColor3 = Color3.fromRGB(17, 17, 17)
-				FunctionTitle.BackgroundTransparency = 0.800
-				FunctionTitle.BorderColor3 = Color3.fromRGB(0, 0, 0)
-				FunctionTitle.BorderSizePixel = 0
-				FunctionTitle.Size = UDim2.new(0.949999988, 0, 0.5, 0)
-				FunctionTitle.ZIndex = 17
+    -- Aspect Ratio Constraint (optional, if needed)
+    UIAspectRatioConstraint.Parent = FunctionTitle
+    UIAspectRatioConstraint.AspectRatio = 8.000
+    UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
 
-				UIAspectRatioConstraint.Parent = FunctionTitle
-				UIAspectRatioConstraint.AspectRatio = 8.000
-				UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
+    -- Text Label Setup
+    TextInt.Name = "TextInt"
+    TextInt.Parent = FunctionTitle
+    TextInt.AnchorPoint = Vector2.new(0.5, 0.5)
+    TextInt.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    TextInt.BackgroundTransparency = 1.000
+    TextInt.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    TextInt.BorderSizePixel = 0
+    TextInt.Position = UDim2.new(0.5, 0, 0.5, 0)
+    TextInt.Size = UDim2.new(0.949999988, 0, 0, 0)  -- Adjust width, height will scale automatically
+    TextInt.AutomaticSize = Enum.AutomaticSize.Y  -- Enable automatic resizing for text
+    TextInt.ZIndex = 18
+    TextInt.Font = Enum.Font.GothamBold
+    TextInt.Text = lrm
+    TextInt.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TextInt.TextScaled = true
+    TextInt.TextSize = 14.000
+    TextInt.TextTransparency = 1
+    TextInt.TextWrapped = true
+    TextInt.TextXAlignment = Enum.TextXAlignment.Left
 
-				TextInt.Name = "TextInt"
-				TextInt.Parent = FunctionTitle
-				TextInt.AnchorPoint = Vector2.new(0.5, 0.5)
-				TextInt.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-				TextInt.BackgroundTransparency = 1.000
-				TextInt.BorderColor3 = Color3.fromRGB(0, 0, 0)
-				TextInt.BorderSizePixel = 0
-				TextInt.Position = UDim2.new(0.5, 0, 0.5, 0)
-				TextInt.Size = UDim2.new(0.949999988, 0, 0.600000024, 0)
-				TextInt.ZIndex = 18
-				TextInt.Font = Enum.Font.GothamBold
-				TextInt.Text = lrm
-				TextInt.TextColor3 = Color3.fromRGB(255, 255, 255)
-				TextInt.TextScaled = true
-				TextInt.TextSize = 14.000
-				TextInt.TextTransparency = 1
-				TextInt.TextWrapped = true
-				TextInt.TextXAlignment = Enum.TextXAlignment.Left
-				Twen:Create(TextInt,TweenInfo1,{TextTransparency = 0.25}):Play();
+    -- Tween Animation for Text Transparency
+    Twen:Create(TextInt, TweenInfo1, {TextTransparency = 0.25}):Play()
 
-				UIGradient.Rotation = 90
-				UIGradient.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 0.00), NumberSequenceKeypoint.new(0.84, 0.25), NumberSequenceKeypoint.new(1.00, 1.00)}
-				UIGradient.Parent = TextInt
+    -- Gradient for Text (optional)
+    UIGradient.Rotation = 90
+    UIGradient.Transparency = NumberSequence.new{
+        NumberSequenceKeypoint.new(0.00, 0.00),
+        NumberSequenceKeypoint.new(0.84, 0.25),
+        NumberSequenceKeypoint.new(1.00, 1.00)
+    }
+    UIGradient.Parent = TextInt
 
-				UICorner.CornerRadius = UDim.new(0, 2)
-				UICorner.Parent = FunctionTitle
+    -- Rounded corners for the frame
+    UICorner.CornerRadius = UDim.new(0, 2)
+    UICorner.Parent = FunctionTitle
 
-				return {
-					Visible = function(newindx)
-						FunctionTitle.Visible = newindx
-					end,
-				};
-			end;
+    return {
+        Visible = function(newindx)
+            FunctionTitle.Visible = newindx
+        end,
+    }
+end
+
 
 			function SectionTable:NewButton(cfg)
 				cfg = Config(cfg,{
